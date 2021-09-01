@@ -4,24 +4,16 @@ import axios from 'axios';
 import CardMaker from './cardmaker';
 
 
-class App extends React.Component {
+class App extends Component {
 
-  state = {
-    followersURL : ""
+  constructor(){
+    super();
+    this.state = {
+      followersURL : "https://api.github.com/users/wlongmire/followers"
+    }
   }
 
-  componentDidMount(){
-    axios.get('https://api.github.com/users/stevenjhomem')
-    .then(response => {
-      console.log(response)
-      this.setState({
-        followersURL : response.data.followers_url
-      })
-    })
-    .catch(error => {
-      console.log('No Information Received')
-    })
-  }
+
 
   render(){
     return (
@@ -34,17 +26,15 @@ class App extends React.Component {
           <form>
             <label>Github Username: 
               <input type = 'text'
-              placeholder = 'Enter Here'
+              placeholder = 'Warren Longmire'
               ></input>
               <button>Stalk!</button>
             </label>
           </form>
           <div className = 'mainUser'>
-            <ul>
-              <li>{this.state.followersURL}</li>
-            </ul>
+            <CardMaker followersURL = {this.state.followersURL}/>
           </div>
-          <CardMaker />
+          
         </div>
       </div>
     );

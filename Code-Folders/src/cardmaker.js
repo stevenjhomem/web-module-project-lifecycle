@@ -1,21 +1,35 @@
-import axios from 'axios';
+
 import React, { Component } from 'react';
+import fetchFollower from './fetchfollower';
 
+    
+class CardMaker extends Component {
 
-
-const theURL = `https://api.github.com/users/`;
-
-
-
-class CardMaker extends React.Component {
-    constructor(){
-        super();
+    constructor(props){
+        super(props);
+        this.state = {
+            followersObjectArray : []
+        }
     }
+
+
+   componentDidMount(){
+       fetchFollower(this.props.followersURL)
+       .then(response => {
+           this.setState({
+               followersObjectArray : response.data
+               });
+       })
+    };
 
     render(){
         return(
             <div>
-                
+                <ul>
+                    {this.state.followersObjectArray.map(followerObject => {
+                        return <li key = {followerObject.id} >{followerObject.login}</li>
+                    })}
+                </ul> 
             </div>
         )
     }
